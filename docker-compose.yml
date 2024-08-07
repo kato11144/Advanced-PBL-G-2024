@@ -1,0 +1,12 @@
+services:
+  ubuntu:
+    container_name: enpit
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+    volumes:
+      - ${PWD}/workspace:/workspace
+    tty: true
+    stdin_open: true
