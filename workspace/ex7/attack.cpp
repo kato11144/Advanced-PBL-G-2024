@@ -80,6 +80,7 @@ int Random_Walk(CMysql *con){
 
 	pthread_mutex_lock(&t_mutex);
 	con -> SetData(ret_x,ret_a,ret_b);
+	printf("(X,A,B)=(%lld,%lld,%lld)\n",_R.x,_A,_B);
 	pthread_mutex_unlock(&t_mutex);
 
 	while(1){

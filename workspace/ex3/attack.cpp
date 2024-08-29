@@ -91,7 +91,9 @@ int Random_Walk(CMysql *con){
 	sprintf(str,"%lld",_A); ret_a = str;
 	sprintf(str,"%lld",_B); ret_b = str;
 	sprintf(str,"%lld",_X); ret_x = str;
+
 	con -> SetData(ret_x, ret_a, ret_b);
+	printf("(X,A,B)=(%lld,%lld,%lld)\n",_X,_A,_B);
 
 	//(3)衝突するまで_Aとpre_A[]から次のAを求めよう!　同様にB,Xを求めよう！
 	//ただし、X座標が10の倍数となる場合のみ登録しよう！

@@ -79,7 +79,9 @@ int Random_Walk(CMysql *con){
 	sprintf(str,"%lld",_A); ret_a = str;
 	sprintf(str,"%lld",_B); ret_b = str;
 	sprintf(str,"%lld",_R.x); ret_x = str;
+
 	con -> SetData(ret_x,ret_a,ret_b);
+	printf("(X,A,B)=(%lld,%lld,%lld)\n",_R.x,_A,_B);
 
 	//(3)衝突するまで_Aとpre_A[]から次のAを求めよう!　同様にB,Rを求めよう！
 	//HINT AとBは通常の加算、Rは楕円加算
@@ -102,7 +104,7 @@ int Random_Walk(CMysql *con){
 		_A = A;
 		_B = B;
 		_R.x = R.x;
-		_R.y = 	R.y;
+		_R.y = R.y;
 		_R.flag = R.flag;
 	}
 
