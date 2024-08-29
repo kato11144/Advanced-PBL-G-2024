@@ -68,8 +68,8 @@ int Random_Walk(CMysql *con){
 	//(1)初期点用に_A,_Bにランダムな数をセットし,_Rを計算しよう！(flagも忘れないように注意！)
 	_A = (INT64)rand() % Order;
 	_B = (INT64)rand() % Order;
-	SCM(&tmp_P,A,P);
-	SCM(&tmp_Q,B,Q);
+	SCM(&tmp_P,_A,P);
+	SCM(&tmp_Q,_B,Q);
 	ECA(&tmp,tmp_P,tmp_Q);
 	_R.x = tmp.x;
 	_R.y = tmp.y;

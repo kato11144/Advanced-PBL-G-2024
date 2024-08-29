@@ -60,15 +60,13 @@ int Random_Walk(CMysql *con){
 	string ret_a, ret_b, ret_x;
 	string col_a, col_b;
 
-	srand((INT64)time(NULL));
+	srand((INT64)time(NULL) + pthread_self());
 
-	pthread_mutex_lock(&t_mutex);
 	_A = (INT64)rand() % Order;
 	_B = (INT64)rand() % Order;
-	pthread_mutex_unlock(&t_mutex);
 
-	SCM(&tmp_P,A,P);
-	SCM(&tmp_Q,B,Q);
+	SCM(&tmp_P,_A,P);
+	SCM(&tmp_Q,_B,Q);
 	ECA(&tmp,tmp_P,tmp_Q);
 	_R.x = tmp.x;
 	_R.y = tmp.y;
@@ -79,9 +77,15 @@ int Random_Walk(CMysql *con){
 	sprintf(str,"%lld",_R.x); ret_x = str;
 
 	pthread_mutex_lock(&t_mutex);
-	con -> SetData(ret_x,ret_a,ret_b);
-	printf("(X,A,B)=(%lld,%lld,%lld)\n",_R.x,_A,_B);
-	pthread_mutex_unlock(&t_mutex);
+	if(FindThenSetData(ret_x,ret_a,ret_b,con)){
+		printf("collision occur\n");
+		printf("(X,A,B)=(%lld,%lld,%lld)\n",_R.x,_A,_B);
+		pthread_mutex_unlock(&t_mutex);
+		return 1;
+	}else{
+		printf("(X,A,B)=(%lld,%lld,%lld)\n",_R.x,_A,_B);
+		pthread_mutex_unlock(&t_mutex);
+	}
 
 	while(1){
 		A = (_A + pre_A[_R.x % Table_Num]) % Order;
