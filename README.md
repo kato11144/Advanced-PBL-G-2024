@@ -52,16 +52,14 @@ mysql -u root -p
 ```
 
 #### Change Authentication Method and Root Password
-```sh
+```sql
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'enpit0000';
 ```
 
 #### Exit MySQL
-```sh
+```sql
 exit;
 ```
-
----
 
 #### Run MySQL Secure Installation
 ```sh
@@ -71,16 +69,21 @@ mysql_secure_installation
 #### During the prompts, enter the following responses
 ```sh
 Enter password for user root : enpit0000
-VALIDATE PASSWORD COMPONENT can be used to test passwords and improve security. It checks the strength of password and allows the users to set only those passwords which are secure enough. Would you like to setup VALIDATE PASSWORD component? Press y|Y for Yes, any other key for No : y
+
+Would you like to setup VALIDATE PASSWORD component? (Press y|Y for Yes, any other key for No) : y
+
 Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG : 0
+
 Change the password for root? (Press y|Y for Yes, any other key for No) : n
+
 Remove anonymous users? (Press y|Y for Yes, any other key for No) : y
+
 Disallow root login remotely? (Press y|Y for Yes, any other key for No) : y
+
 Remove test database and access to it? (Press y|Y for Yes, any other key for No) : y
+
 Reload privilege tables now? (Press y|Y for Yes, any other key for No) : y
 ```
-
----
 
 #### Log in to MySQL (password : enpit0000)
 ```sh
@@ -88,62 +91,46 @@ mysql -u root -p
 ```
 
 #### Modify Password Settings
-```sh
-set global validate_password.length=4;
-set global validate_password.check_user_name=OFF;
+```sql
+SET GLOBAL validate_password.length = 4;
+
+SET GLOBAL validate_password.check_user_name = OFF;
 ```
 
 #### Verify Password Settings
-```sh
-show variables like 'validate_password%';
+```sql
+SHOW VARIABLES LIKE 'validate_password%';
 ```
 
 #### Create Database and User
-```sh
-create database RhoMethod;
-create user 'attacker'@'localhost' identified by '0000';
-grant all on RhoMethod.* to 'attacker'@'localhost';
-flush privileges;
+```sql
+CREATE DATABASE RhoMethod;
+
+CREATE USER 'attacker'@'localhost' IDENTIFIED BY '0000';
+
+GRANT ALL ON RhoMethod.* TO 'attacker'@'localhost';
+
+FLUSH PRIVILEGES;
 ```
 
 #### Exit MySQL
-```sh
+```sql
 exit;
 ```
 
 ---
 
-#### Log in to MySQL (password : 0000)
-```sh
-mysql -u attacker -p
-```
+### MySQL Commands
+```sql
+-- List all databases
+SHOW DATABASES;
 
-#### List available Databases
-```sh
-show databases;
-```
+-- Switch to a specific database
+USE <Database Name>;
 
-#### Exit MySQL
-```sh
-exit;
-```
+-- List all tables in the database
+SHOW TABLES;
 
----
-
-### Docker Commands
-```sh
-# List All Containers
-docker ps -a
-
-# Stop the Container
-docker stop <CONTAINER ID>
-
-# Remove the Container
-docker rm <CONTAINER ID>
-
-# List All Images
-docker images
-
-# Remove the Image
-docker rmi <IMAGE ID>
+-- Display records from a specific table
+SELECT * FROM <Table Name>;
 ```
