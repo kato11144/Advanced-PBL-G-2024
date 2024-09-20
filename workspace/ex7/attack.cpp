@@ -46,6 +46,7 @@ int Precomputation(CMysql *con){
 		pre_B[i] = B;
 		pre_R[i].x = tmp.x;
 		pre_R[i].y = tmp.y;
+		pre_R[i].flag = tmp.flag;
 
 		i++;
 	}

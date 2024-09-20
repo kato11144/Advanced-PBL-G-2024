@@ -51,9 +51,9 @@ int Precomputation(CMysql *con){
 
 		//A,B,Xにランダムな数をセットし、配列pre_A[i],pre_B[i],pre_X[i]に格納しよう！　(配列pre_A,pre_B,pre_Xはグローバルで定義済み)
 		//HINT A,BとXは法(mod)が異なる！
-		A = (INT64)rand()%r;
-		B = (INT64)rand()%r;
-		X = (INT64)rand()%q;
+		A = (INT64)rand() % r;
+		B = (INT64)rand() % r;
+		X = (INT64)rand() % q;
 
 		pre_A[i] = A;
 		pre_B[i] = B;
