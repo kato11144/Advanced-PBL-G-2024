@@ -6,6 +6,9 @@
 // Theradの数
 #define Nthreads 8
 
+// 攻撃終了のフラグ
+bool done = false;
+
 static pthread_t threads[Nthreads];
 static pthread_mutex_t t_mutex;
 
@@ -78,9 +81,15 @@ int Random_Walk(CMysql *con){
 	sprintf(str,"%lld",_R.x); ret_x = str;
 
 	pthread_mutex_lock(&t_mutex);
+	if(done){
+		printf("Another thread has terminated\n");
+		pthread_mutex_unlock(&t_mutex);
+		return 0;
+	}
 	if(FindThenSetData(ret_x,ret_a,ret_b,con)){
 		printf("collision occur\n");
 		printf("(X,A,B)=(%lld,%lld,%lld)\n",_R.x,_A,_B);
+		done = true;
 		pthread_mutex_unlock(&t_mutex);
 		return 1;
 	}else{
@@ -98,9 +107,15 @@ int Random_Walk(CMysql *con){
 		sprintf(str,"%lld",R.x); ret_x = str;
 
 		pthread_mutex_lock(&t_mutex);
+		if(done){
+			printf("Another thread has terminated\n");
+			pthread_mutex_unlock(&t_mutex);
+			return 0;
+		}
 		if(FindThenSetData(ret_x,ret_a,ret_b,con)){
 			printf("collision occur\n");
 			printf("(X,A,B)=(%lld,%lld,%lld)\n",R.x,A,B);
+			done = true;
 			pthread_mutex_unlock(&t_mutex);
 			break;
 		}else{
