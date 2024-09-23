@@ -1,4 +1,4 @@
-# PBL-G-Advanced-2024
+# Advanced-PBL-G-2024
 
 This guide provides instructions for setting up the development environment using Docker
 
